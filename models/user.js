@@ -12,4 +12,4 @@ var UserSchema = Schema({
   image: String
 });
 
-module.export = mongodb.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema)

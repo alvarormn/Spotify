@@ -11,4 +11,4 @@ var SongSchema = Schema({
   album:{ type: Schema.ObjectId, ref: 'Album' }
 });
 
-module.export = mongodb.model('Song', SongSchema)
+module.exports = mongoose.model('Song', SongSchema)

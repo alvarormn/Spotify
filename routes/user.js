@@ -7,8 +7,7 @@ var UserController = require('../controllers/user');
 
 var api = express.Router();
 
-api.get('/testingController', UserController.pruebas);
+api.get('/testingController', UserController.test);
+api.post('/register', UserController.saveUser);
 
-module.exports = {
-  api
-}
+module.exports = api;
