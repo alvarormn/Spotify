@@ -99,8 +99,32 @@ function loginUser(req, res) {
 
 }
 
+function updateUser(req, res) {
+  var userId = req.params.id;
+  var update = req.body;
+
+  User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+    if (err) {
+      res.status(500).send({
+        message: 'Error to update the user'
+      })
+    } else {
+      if (!userUpdated) {
+        res.status(404).send({
+          message: 'Not possible to update the user'
+        })
+      } else {
+        res.status(200).send({
+          user: userUpdated
+        })
+      }
+    }
+  })
+}
+
 module.exports = {
   test,
   saveUser,
-  loginUser
+  loginUser,
+  updateUser
 };
