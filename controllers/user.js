@@ -120,11 +120,71 @@ function updateUser(req, res) {
       }
     }
   })
-}
+};
+
+function uploadImage(req, res){
+  var userID = req.params.id;
+  console.log(req.files);
+
+  if (req.files) {
+    /*var filePath = req.files.image.path;
+    var fileSplit = filePath.split('/');
+    var fileName = fileSplit[2];
+    var extSplit = fileName.split('.');
+    var fileExt = extSplit[1];*/
+
+    var infoImage = {
+      path: req.files.image.path,
+      originalName: req.files.name,
+      newName: function(){
+        var fileSplit = this.path.split('/');
+        var fileName = fileSplit[2];
+        return fileName
+      },
+      ext: function() {
+        var extSplit = this.newName().split('.');
+        var typeExt = extSplit[1];
+        return typeExt
+      }
+    }
+
+    if (infoImage.ext() == 'png' || infoImage.ext() == 'jpg' || infoImage.ext() == 'gif') {
+      User.findByIdAndUpdate(userID, {image: infoImage.newName()}, (err, userUpdated) => {
+        if (err) {
+          res.status(500).send({
+            message: 'Error to update the user'
+          })
+        } else {
+          if (!userUpdated) {
+            res.status(404).send({
+              message: 'Not possible to update the user'
+            })
+          } else {
+            res.status(200).send({
+              user: userUpdated
+            })
+          }
+        }
+      })
+    } else {
+      res.status(200).send({
+        message: 'Extension is not allowed'
+      })
+    }
+
+    console.log(infoImage.ext);
+
+  } else {
+    res.status(200).send({
+      message: 'The image is not upload'
+    })
+  }
+};
 
 module.exports = {
   test,
   saveUser,
   loginUser,
-  updateUser
+  updateUser,
+  uploadImage
 };

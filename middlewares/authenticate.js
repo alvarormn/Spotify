@@ -23,7 +23,6 @@ exports.ensureAuth = function(req, res, next) {
     }
 
   } catch (ex) {
-    console.log(ex)
     return res.status(404).send({
       message: 'Token not valid'
     })
