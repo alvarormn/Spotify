@@ -64,7 +64,7 @@ function loginUser(req, res) {
   var email = params.email;
   var password = params.password
 
-  User.finsOne({email: email.toLowerCase()}, (err, user) => {
+  User.findOne({email: email.toLowerCase()}, (err, user) => {
     if (err) {
       res.status(500).send({
         messge: 'Error en la petición'
@@ -83,7 +83,7 @@ function loginUser(req, res) {
             })
           } else {
             if (params.gethash) {
-              
+              //devolver un token de jwt
             } else {
               res.status(200).send({user})
             }
@@ -97,5 +97,6 @@ function loginUser(req, res) {
 
 module.exports = {
   test,
-  saveUser
+  saveUser,
+  loginUser
 };
