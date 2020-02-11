@@ -124,15 +124,8 @@ function updateUser(req, res) {
 
 function uploadImage(req, res){
   var userID = req.params.id;
-  console.log(req.files);
 
   if (req.files) {
-    /*var filePath = req.files.image.path;
-    var fileSplit = filePath.split('/');
-    var fileName = fileSplit[2];
-    var extSplit = fileName.split('.');
-    var fileExt = extSplit[1];*/
-
     var infoImage = {
       path: req.files.image.path,
       originalName: req.files.name,
