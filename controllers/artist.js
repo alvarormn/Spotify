@@ -3,7 +3,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const mogoosePagination = require('mongoose-pagination');
+const mogoosePag = require('mongoose-pagination');
 
 const Artist = require('../models/artist');
 const Album = require('../models/album');
@@ -68,15 +68,39 @@ function getArtist(req, res) {
 }
 
 function getArtists(req, res) {
-  let page = req.params.page;
+  let page
+  if (req.params.page) {
+    page = req.params.page;
+  } else {
+    page = 1;
+  }
   let itemsPerPage = 3;
 
-
+  Artist.find().sort('name').paginate(page, itemsPerPage, (err, artists, total) => {
+    if (err) {
+      res.status(500).send({
+        message:'Request error'
+      })
+    } else {
+      if (!artists) {
+        res.status(404).send({
+          message:'The artists are not exist'
+        })
+      } else {
+        return res.status(200).send({
+          total: total,
+          page: parseInt(page),
+          artists: artists
+        })
+      }
+    }
+  })
 }
 
 
 
 module.exports = {
   saveArtist,
-  getArtist
+  getArtist,
+  getArtists
 };
