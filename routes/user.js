@@ -2,15 +2,15 @@
 
 //ruta de usuarios
 
-var express = require('express');
-var multipart = require('connect-multiparty')
+const express = require('express');
+const multipart = require('connect-multiparty')
 
-var UserController = require('../controllers/user');
-var md_auth = require('../middlewares/authenticate')
+const UserController = require('../controllers/user');
+const md_auth = require('../middlewares/authenticate')
 
-var api = express.Router();
+const api = express.Router();
 
-var md_upload = multipart({
+const md_upload = multipart({
   uploadDir: './uploads/users'
 })
 

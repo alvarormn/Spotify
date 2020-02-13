@@ -1,12 +1,13 @@
 'use strict'
 
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
 
 //cargar rutas
-var user_routes = require('./routes/user');
+const user_routes = require('./routes/user');
+const artist_routes = require('./routes/artist');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -14,14 +15,7 @@ app.use(bodyParser.json());
 //configurar cabeceras http
 
 //rutas base
-app.use('/user_api', user_routes);
-
-
-
-/*app.get('/pruebas', function(req,res){
-  res.status(200).send({
-    message: 'Hello world'
-  })
-})*/
+app.use('/api/user', user_routes);
+app.use('/api/artist', artist_routes);
 
 module.exports = app;

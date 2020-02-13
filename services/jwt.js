@@ -1,11 +1,11 @@
 'use strict'
 
-var jwt = require('jwt-simple');
-var moment = require('moment');
-var secret = 'Secret key'
+let jwt = require('jwt-simple');
+let moment = require('moment');
+let secret = 'Secret key'
 
 exports.createToken = function(user){
-  var payLoad = {
+  let payLoad = {
     sub: user._id,
     name: user.name,
     surname: user.surname,
@@ -26,7 +26,7 @@ todos los componentes. Se puede realizar de ambas formas, es mas comoda de la
 forma de arriba pero más ordenada y comprensible en la forma de abajo.
 
 function createToken(user) {
-  var payLoad = {
+  let payLoad = {
     sub: user._id,
     name: user.name,
     surname: user.surname,

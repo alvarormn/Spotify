@@ -1,8 +1,8 @@
 'use strict'
 
-var jwt = require('jwt-simple');
-var moment = require('moment');
-var secret = 'Secret key'
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const secret = 'Secret key'
 
 exports.ensureAuth = function(req, res, next) {
   if (!req.headers.authorization) {
@@ -11,10 +11,10 @@ exports.ensureAuth = function(req, res, next) {
     })
   }
 
-  var token = req.headers.authorization.replace(/['"]+/g, '');
+  let token = req.headers.authorization.replace(/['"]+/g, '');
 
   try {
-    var payLoad = jwt.decode(token, secret);
+    let payLoad = jwt.decode(token, secret);
 
     if (payLoad.exp <= moment().unix()) {
       return res.status(401).send({

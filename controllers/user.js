@@ -1,11 +1,11 @@
 'use strict'
 //Controlador de usuarios
 
-var bcrypt = require('bcrypt-nodejs');
-var User = require('../models/user');
-var jwt = require('../services/jwt')
-var fs = require('fs');
-var path = require('path')
+const bcrypt = require('bcrypt-nodejs');
+const User = require('../models/user');
+const jwt = require('../services/jwt')
+const fs = require('fs');
+const path = require('path')
 
 
 function test(req, res){
@@ -15,13 +15,13 @@ function test(req, res){
 }
 
 function saveUser(req, res){
-  var user = new User();
-  var params = req.body;
+  let user = new User();
+  let params = req.body;
 
   user.name= params.name;
   user.surname= params.surname;
   user.email= params.email;
-  user.role= 'ROLE_ADMIN';
+  user.role= 'ROLE_USER';
   user.image= 'null';
 
   //Encriptar contraseña, revisar datos no null y guardar datos
@@ -62,10 +62,10 @@ function saveUser(req, res){
 }
 
 function loginUser(req, res) {
-  var params = req.body;
+  let params = req.body;
 
-  var email = params.email;
-  var password = params.password
+  let email = params.email;
+  let password = params.password
 
   User.findOne({email: email.toLowerCase()}, (err, user) => {
     if (err) {
@@ -102,8 +102,8 @@ function loginUser(req, res) {
 }
 
 function updateUser(req, res) {
-  var userId = req.params.id;
-  var update = req.body;
+  let userId = req.params.id;
+  let update = req.body;
 
   User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
     if (err) {
@@ -125,20 +125,20 @@ function updateUser(req, res) {
 };
 
 function uploadImage(req, res){
-  var userID = req.params.id;
+  let userID = req.params.id;
 
   if (req.files) {
-    var infoImage = {
+    let infoImage = {
       path: req.files.image.path,
       originalName: req.files.name,
       newName: function(){
-        var fileSplit = this.path.split('/');
-        var fileName = fileSplit[2];
+        let fileSplit = this.path.split('/');
+        let fileName = fileSplit[2];
         return fileName
       },
       ext: function() {
-        var extSplit = this.newName().split('.');
-        var typeExt = extSplit[1];
+        let extSplit = this.newName().split('.');
+        let typeExt = extSplit[1];
         return typeExt
       }
     }
@@ -177,8 +177,8 @@ function uploadImage(req, res){
 };
 
 function getImageFile(req, res) {
-  var imageFile = req.params.imageFile;
-  var pathFile = './uploads/users/'+imageFile
+  let imageFile = req.params.imageFile;
+  let pathFile = './uploads/users/'+imageFile
 
   fs.exists(pathFile, function(exists) {
     if (exists) {

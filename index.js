@@ -1,8 +1,8 @@
 'use strict'
 
-var mongoose = require('mongoose');
-var app = require('./app');
-var port = process.env.PORT || 3977;
+const mongoose = require('mongoose');
+const app = require('./app');
+const port = process.env.PORT || 3977;
 
 mongoose.connect('mongodb://localhost:27017/spotify',
 {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true },
