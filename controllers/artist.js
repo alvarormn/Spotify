@@ -60,7 +60,7 @@ function getArtist(req, res) {
         })
       } else {
         res.status(200).send({
-          artist
+          artist: artist
         })
       }
     }
@@ -97,10 +97,86 @@ function getArtists(req, res) {
   })
 }
 
+function updateArtist(req, res) {
+  const artistID = req.params.id;
+  const updateData = req.body;
+
+  Artist.findByIdAndUpdate(artistID, updateData, (err, artistUpdated) => {
+    if (err) {
+      res.status(500).send({
+        message:'Request error'
+      })
+    } else {
+      if (!artistUpdated) {
+        res.status(404).send({
+          message:'The artists are not exist'
+        })
+      } else {
+        res.status(200).send({
+          artist: artistUpdated
+        })
+      }
+    }
+  })
+}
+
+function deleteArtist(req, res) {
+  const artistID = req.params.id;
+
+  Artist.findByIdAndRemove(artistID, (err, artistRemoved) => {
+    console.log(artistRemoved)
+    if (err) {
+      res.status(500).send({
+        message:'Request error'
+      })
+    } else {
+      if (!artistRemoved) {
+        res.status(404).send({
+          message:'The artists are not deleted'
+        })
+      } else {
+        console.log('Artist`s already removed'+ "\n" + artistRemoved);
+        res.status(200).send({
+          message: 'Artist`s already removed',
+          artist: artistRemoved
+        })
+      }
+    }
+  });
+
+        /*Album.deleteMany({artist: artistRemoved._id}, (err, albumsDeleted) => {
+            if (err) {
+              res.status(500).send({
+                message:'Request error'
+              })
+            } else {
+              if (!albumsDeleted) {
+                res.status(404).send({
+                  message:'The albums are not deleted'
+                })
+              } else {
+                for(album for albumsDeleted){
+                  Song.deleteMany({album: album._id})
+                }
+                Song.deleteMany({album: })
+                res.status(200).send({
+                  message: 'Artist`s already removed',
+                  artist: artistRemoved
+                })
+              }
+            }
+        })
+      }
+    }
+  })*/
+}
+
 
 
 module.exports = {
   saveArtist,
   getArtist,
-  getArtists
+  getArtists,
+  updateArtist,
+  deleteArtist
 };
