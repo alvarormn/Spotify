@@ -2,9 +2,11 @@
 
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const secret = 'Secret key'
+const secret = 'Secret key';
+
 
 exports.ensureAuth = function(req, res, next) {
+  let payLoad;
   if (!req.headers.authorization) {
     return res.status(403).send({
       message: 'the request has not the authorization´s header'
@@ -14,7 +16,7 @@ exports.ensureAuth = function(req, res, next) {
   let token = req.headers.authorization.replace(/['"]+/g, '');
 
   try {
-    let payLoad = jwt.decode(token, secret);
+    payLoad = jwt.decode(token, secret);
 
     if (payLoad.exp <= moment().unix()) {
       return res.status(401).send({
