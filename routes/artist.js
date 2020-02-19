@@ -17,4 +17,7 @@ api.delete('/deleteArtist/:id', md_auth.ensureAuth, ArtistCtrl.deleteArtist);
 api.put('/updateImage/:id', [md_auth.ensureAuth, md_upload], ArtistCtrl.uploadImage);
 api.get('/getAvatar/:imageFile', ArtistCtrl.getImageFile)
 
+//prueba
+api.get('/test/:id', md_auth.ensureAuth, ArtistCtrl.testDeleteArtist);
+
 module.exports = api;

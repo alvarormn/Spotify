@@ -145,9 +145,9 @@ function deleteArtist(req, res) {
                 message:'The albums are not deleted'
               })
             } else {
-              //No está completo ya que falta elimininar
+              //No está completo ya que falta elimininar canciones
               res.status(200).send({
-                message: 'Se borraria el artistia y ekl albun',
+                message: 'Se borraria el artistia y ekl album',
               })
             }
           }
@@ -181,6 +181,84 @@ function deleteArtist(req, res) {
       }
     }
   })*/
+}
+
+function testDeleteArtist(req, res) {
+  const artistID = req.params.id;
+
+  Artist.findByIdAndRemove({_id: artistID}, (err, artistDeleted) => {
+    if (err) {
+      res.status(500).send({
+        message:'Request error'
+      })
+    } else if (!artistDeleted) {
+      res.status(404).send({
+        message:'The artists are not deleted'
+      })
+    } else {
+      Album.deleteMany({artist:artistDeleted._id}, (err, albumDeleted) => {
+        if (err) {
+          res.status(500).send({
+            message:'Request error'
+          })
+        } else if (!albumDeleted) {
+          res.status(404).send({
+            message:'The album are not deleted'
+          })
+        } else {
+          console.log(albumDeleted.n)
+          for (let album of albumDeleted) {
+            Song.deleteMany({album: album._id}, (err, songDeleted) => {
+              if (err) {
+                res.status(500).send({
+                  message:'Request error'
+                })
+              } else if (!songDeleted) {
+                res.status(404).send({
+                  message:'The album are not deleted'
+                })
+              } else {
+                console.log({
+                  Artist: artistDeleted,
+                  Albums:albumDeleted,
+                  Songs: songDeleted
+                });
+                res.status(200).send({
+                  Artist: artistDeleted,
+                  Albums:albumDeleted,
+                  Songs: songDeleted
+                })
+              }
+            })
+          }
+          /*for (var i = 0; i < albumDeleted.length; i++) {
+            Song.deleteMany({album: albumDeleted[i]._id}, (err, songDeleted) => {
+              if (err) {
+                res.status(500).send({
+                  message:'Request error'
+                })
+              } else if (!songDeleted) {
+                res.status(404).send({
+                  message:'The album are not deleted'
+                })
+              } else {
+                console.log({
+                  Artist: artistDeleted,
+                  Albums:albumDeleted,
+                  Songs: songDeleted
+                });
+                res.status(200).send({
+                  Artist: artistDeleted,
+                  Albums:albumDeleted,
+                  Songs: songDeleted
+                })
+              }
+            })
+          }*/
+        }
+      })
+    }
+  })
 }
 
 function uploadImage(req, res){
@@ -258,5 +336,6 @@ module.exports = {
   updateArtist,
   deleteArtist,
   uploadImage,
-  getImageFile
+  getImageFile,
+  testDeleteArtist
 };
