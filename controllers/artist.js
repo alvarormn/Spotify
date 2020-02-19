@@ -1,6 +1,5 @@
 'use strict'
 
-
 const path = require('path');
 const fs = require('fs');
 const mogoosePag = require('mongoose-pagination');
@@ -40,7 +39,7 @@ function saveArtist(req, res) {
     })
   } else {
     res.status(205).send({
-      message: 'Introduce los datos requeridos'
+      message: 'Input the required data'
     })
   }
 }
