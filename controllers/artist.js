@@ -135,12 +135,23 @@ function deleteArtist(req, res) {
           message:'The artists are not deleted'
         })
       } else {
-        Album.find(artist: artistRemoved._id).remove
-
-        console.log('Artist`s already removed'+ "\n" + artistRemoved);
-        res.status(200).send({
-          message: 'Artist`s already removed',
-          artist: artistRemoved
+        Album.deleteMany({artist: artistRemoved._id}, (err, albumsDeleted) => {
+          if (err) {
+            res.status(500).send({
+              message:'Request error'
+            })
+          } else {
+            if (!albumsDeleted) {
+              res.status(404).send({
+                message:'The albums are not deleted'
+              })
+            } else {
+              //No está completo ya que falta elimininar
+              res.status(200).send({
+                message: 'Se borraria el artistia y ekl albun',
+              })
+            }
+          }
         })
       }
     }
@@ -173,6 +184,72 @@ function deleteArtist(req, res) {
   })*/
 }
 
+function uploadImage(req, res){
+  let artistID = req.params.id;
+
+  if (req.files) {
+    let infoImage = {
+      path: req.files.image.path,
+      originalName: req.files.name,
+      newName: function(){
+        let fileSplit = this.path.split('/');
+        let fileName = fileSplit[2];
+        return fileName
+      },
+      ext: function() {
+        let extSplit = this.newName().split('.');
+        let typeExt = extSplit[1];
+        return typeExt
+      }
+    }
+
+    if (infoImage.ext() == 'png' || infoImage.ext() == 'jpg' || infoImage.ext() == 'gif') {
+      Artist.findByIdAndUpdate(artistID, {image: infoImage.newName()}, (err, artistUpdated) => {
+        if (err) {
+          res.status(500).send({
+            message: 'Error to update the user'
+          })
+        } else {
+          if (!artistUpdated) {
+            res.status(404).send({
+              message: 'Not possible to update the user'
+            })
+          } else {
+            res.status(200).send({
+              artist: artistUpdated
+            })
+          }
+        }
+      })
+    } else {
+      res.status(200).send({
+        message: 'Extension is not allowed'
+      })
+    }
+
+    console.log(infoImage.ext);
+
+  } else {
+    res.status(200).send({
+      message: 'The image is not upload'
+    })
+  }
+};
+
+function getImageFile(req, res) {
+  let imageFile = req.params.imageFile;
+  let pathFile = './uploads/artists/'+imageFile
+
+  fs.exists(pathFile, function(exists) {
+    if (exists) {
+      res.sendFile(path.resolve(pathFile))
+    } else {
+      res.status(200).send({
+        message: 'Image do not exist'
+      })
+    }
+  })
+}
 
 
 module.exports = {
@@ -180,5 +257,7 @@ module.exports = {
   getArtist,
   getArtists,
   updateArtist,
-  deleteArtist
+  deleteArtist,
+  uploadImage,
+  getImageFile
 };
