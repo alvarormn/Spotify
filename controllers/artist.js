@@ -135,6 +135,8 @@ function deleteArtist(req, res) {
           message:'The artists are not deleted'
         })
       } else {
+        Album.find(artist: artistRemoved._id).remove
+
         console.log('Artist`s already removed'+ "\n" + artistRemoved);
         res.status(200).send({
           message: 'Artist`s already removed',
