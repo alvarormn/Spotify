@@ -206,7 +206,7 @@ function testDeleteArtist(req, res) {
             message:'The album are not deleted'
           })
         } else {
-          console.log(albumDeleted.n)
+          console.log(albumDeleted)
           for (let album of albumDeleted) {
             Song.deleteMany({album: album._id}, (err, songDeleted) => {
               if (err) {
