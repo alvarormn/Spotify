@@ -45,7 +45,7 @@ function saveAlbum(req, res) {
 }
 
 function getAlbum(req, res) {
-  let albumID = req.params.id;
+  const albumID = req.params.id;
 
   Album.findById(albumID).populate({path: 'artist'}).exec((err, album) => {
   //Album.findById(albumID, (err, album) => {
