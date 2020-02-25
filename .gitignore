@@ -2,4 +2,7 @@
 /.tmp
 /.sass-cache
 /uploads/users
+/uploads/songs
+/uploads/albums
+/uploads/artists
 /json
