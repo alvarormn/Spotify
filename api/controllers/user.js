@@ -63,10 +63,16 @@ function saveUser(req, res){
 
 function loginUser(req, res) {
   let params = req.body;
+  console.log(params);
 
   let email = params.email;
   let password = params.password
 
+  if (email == undefined) {
+    res.status(500).send({
+      messge: 'No está el email'
+    })
+  }
   User.findOne({email: email.toLowerCase()}, (err, user) => {
     if (err) {
       res.status(500).send({
@@ -84,6 +90,10 @@ function loginUser(req, res) {
             res.status(404).send({
               message: 'No se ha podido logear el usuario'
             })
+          } else if(check != true) {
+            res.status(404).send({
+              message: 'Contraseña incorrecta'
+            })
           } else {
             if (params.gethash) {
               //devolver un token de jwt
@@ -91,7 +101,9 @@ function loginUser(req, res) {
                 token: jwt.createToken(user)
               })
             } else {
-              res.status(200).send({user})
+              res.status(200).send({
+                user: user
+              })
             }
           }
         })
