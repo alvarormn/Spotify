@@ -13,7 +13,7 @@ import { User } from './models/user'
 export class AppComponent implements OnInit{
   title = 'Musify';
   user: User;
-  identity = true;
+  identity;
   token;
   errorMessage;
 
@@ -39,6 +39,8 @@ export class AppComponent implements OnInit{
 
         let identity = results.user;
         this.identity = identity;
+        console.log(results)
+
 
         if (!identity._id) {
           console.error("El usuario no está correctamente identificado")
@@ -82,5 +84,10 @@ export class AppComponent implements OnInit{
         }
       }
     );
+  }
+
+  logout(){
+    localStorage.clear();
+    this.identity = null;
   }
 }
