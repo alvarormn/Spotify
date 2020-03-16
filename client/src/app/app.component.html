@@ -7,6 +7,15 @@
   <div *ngIf="identity" class="row">
     <div class="central col-lg-12">
       <p>Estas logeado en la apliación</p>
+      <div class="jumbotron">
+        <h4>Datos</h4>
+        <span>Nombre: </span><b>{{ identity.name }}</b>
+        <br>
+        <span>Apellidos: </span><b>{{identity.surname}}</b>
+        <br>
+        <button class="btn btn-primary" (click)="logout()">Cerrar sesión</button>
+      </div>
+
     </div>
   </div>
   <div *ngIf="!identity" class="row">
