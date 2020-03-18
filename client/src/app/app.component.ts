@@ -32,58 +32,31 @@ export class AppComponent implements OnInit{
   }
 
   onSubmit(){
-
-    this._userService.signup(this.user, null).subscribe(
+    this.errorMessage= null;
+    this._userService.signup(this.user, true).subscribe(
       results => {
-        this.errorMessage= null;
-
-        let identity = results.user;
+        const token = results.token;
+        this.token = token;
+        const identity = results.user;
         this.identity = identity;
         console.log(results)
-
-
-        if (!identity._id) {
+        if (identity._id && this.token.length > 0) {
+          localStorage.setItem('identity', JSON.stringify(identity));
+          localStorage.setItem('token', token);
+        } else if (!identity._id) {
           console.error("El usuario no está correctamente identificado")
-        } else {
-
-          this._userService.signup(this.user, true).subscribe(
-            results => {
-              let token = results.token;
-              this.token = token;
-
-              if (this.token.length <= 0) {
-                console.error("El token no se ha generado")
-              } else {
-                localStorage.setItem('identity', JSON.stringify(identity));
-                localStorage.setItem('token', token);
-                //console.log(identity);
-                //console.log(token);
-              }
-
-            },
-            error => {
-              let errorMessage = <any>error;
-              if (errorMessage != null){
-
-                //console.log(errorMessage.error)
-                this.errorMessage = error;
-                console.log(errorMessage.error.message)
-              }
-            }
-          );
+        } else if (this.token.length <= 0) {
+          console.error("El token no se ha generado")
         }
-
       },
       error => {
         let errorMessage = <any>error;
         if (errorMessage != null){
-
-          //console.log(errorMessage.error)
           this.errorMessage = error;
           console.log(errorMessage.error.message)
         }
       }
-    );
+    )
   }
 
   logout(){

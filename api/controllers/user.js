@@ -18,11 +18,11 @@ function saveUser(req, res){
   let user = new User();
   let params = req.body;
 
-  user.name= params.name;
-  user.surname= params.surname;
-  user.email= params.email;
-  user.role= 'ROLE_USER';
-  user.image= 'null';
+  user.name = params.name;
+  user.surname = params.surname;
+  user.email = params.email;
+  user.role = 'ROLE_USER';
+  user.image = 'null';
 
   //Encriptar contraseña, revisar datos no null y guardar datos
   if (params.password) {
@@ -98,11 +98,19 @@ function loginUser(req, res) {
             if (params.gethash) {
               //devolver un token de jwt
               res.status(200).send({
-                token: jwt.createToken(user)
+                token: jwt.createToken(user),
+                user: {
+                  _id: user._id,
+                  name: user.name,
+                  surname: user.surname,
+                  email: user.email,
+                  role: user.role,
+                  image: user.image
+                }
               })
             } else {
-              res.status(200).send({
-                user: user
+              res.status(500).send({
+                message: "Forbidden request"
               })
             }
           }
