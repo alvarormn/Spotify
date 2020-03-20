@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   token;
   errorMessage;
   alertRegister;
+  successReg;
   valEmail = REGEX.valEmail;
 
   constructor(
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit{
         if (identity._id && this.token.length > 0) {
           localStorage.setItem('identity', JSON.stringify(identity));
           localStorage.setItem('token', token);
+          this.user = new User('','','','','','ROLE_USER','');
         } else if (!identity._id) {
           console.error("El usuario no está correctamente identificado")
         } else if (this.token.length <= 0) {
@@ -72,25 +74,26 @@ export class AppComponent implements OnInit{
   }
 
   onSubmitRegister(){
-    console.log(this.user_register);
+    //console.log(this.user_register);
 
     this._userService.register(this.user_register).subscribe(
       results => {
-        console.log(results)
-        /*let user = results;
+        let user = results.user;
         this.user_register = user;
 
         if (!user._id) {
-          console.error("Error al registrarse");
+          this.alertRegister = {error: "Error al registrarse"};
         } else {
-
-        }*/
+          this.successReg = {message: "Successful registration"}
+          console.log(this.successReg);
+          this.user_register = new User('','','','','','ROLE_USER','');
+        }
 
       },
       error => {
         let alertRegister = <any>error;
         if (alertRegister != null){
-          //this.errorMessage = error;
+          this.alertRegister = error;
           console.log(alertRegister.error.message)
         }
       }

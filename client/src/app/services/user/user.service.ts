@@ -26,7 +26,7 @@ export class UserService {
 
   }
 
-  register(user_to_register){
+  register(user_to_register): Observable<any>{
     const params = JSON.stringify(user_to_register);
 
     const headers = new HttpHeaders({'Content-Type':'application/json'});

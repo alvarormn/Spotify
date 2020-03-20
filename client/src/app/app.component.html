@@ -148,6 +148,9 @@
         <div *ngIf="alertRegister" class="alert alert-warning" role="alert">
           {{alertRegister.error.message}}
         </div>
+        <div *ngIf="successReg" class="alert alert-success" role="alert">
+          {{successReg.message}}
+        </div>
       </form>
     </div>
   </div>
