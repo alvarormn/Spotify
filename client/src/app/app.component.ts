@@ -33,8 +33,8 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
-    console.log(this.identity)
-    console.log(this.token)
+    console.log(this.identity);
+    console.log(this.token);
   }
 
   onSubmit(){
@@ -62,10 +62,10 @@ export class AppComponent implements OnInit{
         let errorMessage = <any>error;
         if (errorMessage != null){
           this.errorMessage = error;
-          console.log(errorMessage.error.message)
+          console.log(errorMessage.error.message);
         }
       }
-    )
+    );
   }
 
   logout(){
@@ -74,7 +74,6 @@ export class AppComponent implements OnInit{
   }
 
   onSubmitRegister(){
-    //console.log(this.user_register);
 
     this._userService.register(this.user_register).subscribe(
       results => {
@@ -94,7 +93,7 @@ export class AppComponent implements OnInit{
         let alertRegister = <any>error;
         if (alertRegister != null){
           this.alertRegister = error;
-          console.log(alertRegister.error.message)
+          console.log(alertRegister.error.message);
         }
       }
     )
