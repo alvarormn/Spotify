@@ -33,6 +33,16 @@ export class UserService {
     return this._http.post(this.url+'/register', params, {headers: headers});
   }
 
+  updateUser(user_to_update){
+    const params = JSON.stringify(user_to_update);
+
+    const headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'Authorization': this.getTocken()
+    });
+    return this._http.post(this.url+'/update/'+user_to_update._id, params, {headers: headers});
+  }
+
   getIdentity(){
     const identity = JSON.parse(localStorage.getItem('identity'));
     if (identity != undefined) {
