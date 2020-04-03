@@ -6,9 +6,9 @@ const app = require('./app');
 const port = process.env.PORT || 3977;
 
 
-const config = {
+/*const config = {
     username:'ubuntu',
-    host:'3.136.155.144',
+    host:'3.21.164.220',
     agent : process.env.SSH_AUTH_SOCK,
     privateKey:require('fs').readFileSync('./ssh/securityKey.pem'),
     port:22,
@@ -40,9 +40,9 @@ let server = tunnel(config, function (error,server) {
       }
     });
   }
-})
+})*/
 
-/*mongoose.connect('mongodb://localhost:27017/spotify',
+mongoose.connect('mongodb://localhost:27017/spotify',
 {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true, useNewUrlParser: true },
 (err, res) => {
   if(err){
@@ -55,4 +55,4 @@ let server = tunnel(config, function (error,server) {
     })
 
   }
-});*/
+});
