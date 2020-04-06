@@ -1,0 +1,85 @@
+<div *ngIf="!identity">
+  <h2>Register</h2>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="col-md-7">
+    <div class="form-group">
+      <label for="nameRegister">Name</label>
+      <input
+        type="text"
+        #name="ngModel"
+        name="name"
+        [(ngModel)]="user_register.name"
+        class="form-control"
+        id="nameRegister"
+        required />
+      <!--Hay que añadir con una expresión regular que se introduce correctamente
+      el contenido de input-->
+      <small id="nameRegister" class="form-text text-muted">
+        This field is required
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="surnameRegister">Surname</label>
+      <input
+      type="text"
+      #surname="ngModel"
+      name="surname"
+      [(ngModel)]="user_register.surname"
+      class="form-control"
+      id="surnameRegister"
+      required />
+      <!--Hay que añadir con una expresión regular que se introduce correctamente
+      el contenido de input-->
+      <small id="surnameRegister" class="form-text text-muted">
+        This field is required
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="emailRegister">email</label>
+      <input
+        type="email"
+        #email="ngModel"
+        name="email"
+        [(ngModel)]="user_register.email"
+        [(pattern)]=valEmail
+        #emailReg="ngModel"
+        class="form-control"
+        required
+        id="emailRegister"
+        aria-describedby="emailHelp">
+      <!--Hay que añadir con una expresión regular que se introduce correctamente
+      el contenido de input-->
+      <small id="emailRegister" class="form-text text-muted">
+        This field is required
+      </small>
+      <div *ngIf="emailReg.errors?.pattern">
+        <div class="alert alert-warning" role="alert">
+        Email is not valid.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="passwordRegister">Password</label>
+      <input
+      type="password"
+      #password="ngModel"
+      name="password"
+      [(ngModel)]="user_register.password"
+      class="form-control"
+      required
+      id="passwordRegister">
+      <!--Hay que añadir con una expresión regular que se introduce correctamente
+      el contenido de input-->
+      <small id="passwordRegister" class="form-text text-muted">
+        This field is required
+      </small>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <br>
+    <div *ngIf="alertRegister" class="alert alert-warning" role="alert">
+      {{alertRegister.error.message}}
+    </div>
+    <div *ngIf="successReg" class="alert alert-success" role="alert">
+      {{successReg.message}}
+    </div>
+  </form>
+</div>

@@ -38,9 +38,10 @@ export class UserService {
 
     const headers = new HttpHeaders({
       'Content-Type':'application/json',
-      'Authorization': this.getTocken()
+      'Authorization': this.getToken()
     });
-    return this._http.post(this.url+'/update/'+user_to_update._id, params, {headers: headers});
+    return this._http
+    .post(this.url+'/update/'+user_to_update._id, params, {headers: headers});
   }
 
   getIdentity(){
