@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class Globals {
+export class GLOBAL {
   title: string = 'Musify';
-  identity;
-  token;
+  identity:string = null;
+  token:string = null;
+  data:string = 'vacio'
 }

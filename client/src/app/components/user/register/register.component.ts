@@ -3,8 +3,8 @@ import * as $ from 'jquery';
 
 import { UserService } from '../../../services/user/user.service'
 import { User } from '../../../models/user';
-import { REGEX } from '../../../assets/regex'
-import { Globals } from '../../../global'
+import { REGEX } from '../../../assets/regex';
+
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
   valEmail = REGEX.valEmail;
 
   constructor(
-    private _userService:UserService
+    private _userService:UserService,
   ) {
     this.user_register = new User('','','','','','ROLE_USER','');
   }
@@ -28,8 +28,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.identity = this._userService.getIdentity();
     //this.token = this._userService.getToken();
-    //console.log(this.identity);
-
   }
 
   onSubmitRegister(){
